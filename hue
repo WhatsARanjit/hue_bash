@@ -1,0 +1,32 @@
+#!/bin/bash
+
+CURL='/usr/bin/curl -s'
+METHOD=$1
+ENDPOINT=$2
+KEY='<PUT KEY HERE>'
+
+if [[ "$METHOD" == "GET" ]]
+  then
+    $CURL \
+    -X $METHOD \
+    -A "Stuff" \
+    -H "Connection: keep-alive" \
+    -H "Accept-Encoding: gzip,deflate" \
+    -H "Accept-Language: en-us" \
+    -H "Accept: */*" \
+    -H "Content-Type: application/json" \
+    "http://10.0.0.2/api/${KEY}/${ENDPOINT}" \
+    | python -m json.tool
+  else
+    $CURL \
+    -X $METHOD \
+    -A "Stuff" \
+    -H "Connection: keep-alive" \
+    -H "Accept-Encoding: gzip,deflate" \
+    -H "Accept-Language: en-us" \
+    -H "Accept: */*" \
+    -H "Content-Type: application/json" \
+    -d "$3" \
+    "http://10.0.0.2/api/${KEY}/${ENDPOINT}" \
+    | python -m json.tool
+fi
